@@ -17,7 +17,7 @@ config:
         -
           theme: alt
           text: Github →
-          link: https://github.com/imchuyun
+          link: https://github.com/imchuyun/chuyun-wiki
 ---
 # chuyun.wiki 共创教程
 
@@ -80,6 +80,3 @@ git push --set-upstream origin your-branch-name
 
 [网易我的世界开发者Wiki](https://github.com/MCNeteaseDevs/netease-bedrock-wiki)
 [Minecraft Bedrock Wiki](https://github.com/Bedrock-OSS/bedrock-wiki?tab=readme-ov-file#minecraft-bedrock-wiki)
-
-
-
