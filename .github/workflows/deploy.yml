@@ -1,0 +1,40 @@
+name: 部署 VuePress 到云服务器 (FTP版)
+
+# 触发条件：PR合并到 main 分支时
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  deploy:
+    # 只有在 PR 真正被合并时才运行
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：检出代码
+      - name: 检出代码仓库
+        uses: actions/checkout@v4
+
+      # 步骤2：设置 Node.js 环境
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # 步骤3：安装依赖并构建
+      - name: 安装依赖 & 构建
+        run: |
+          npm install
+          npm run docs:build
+
+      # 步骤4：通过 FTP 部署到云服务器
+      - name: 📂 通过 FTP 同步文件
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./docs/.vuepress/dist/
+          server-dir: ${{ secrets.FTP_TARGET_PATH }}
